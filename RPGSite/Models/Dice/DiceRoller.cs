@@ -25,11 +25,11 @@ namespace RPGSite.Models.Dice
         /// <param name="times">The amount of times to roll the die.</param>
         /// <param name="difficulty">The difficulty to roll against.</param>
         /// <returns>A list of all the roll results.</returns>
-        public List<DieResult> Roll(int value,int times,int difficulty)
+        public List<DieResult> Roll(int times, int value,int difficulty)
         {
             return DieRoll(value, times, difficulty);
         }
-        public List<DieResult> Roll(int value, int times)
+        public List<DieResult> Roll(int times, int value)
         {
             return DieRoll(value, times, Settings.StandardDifficulty);
         }

@@ -38,8 +38,6 @@ namespace RPGSite.Models
                 .Property(c => c.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
-            //modelBuilder.Entity<DiceRoller>().HasKey(dr => dr.SettingsId);
-
             modelBuilder.Entity<DiceSettings>().HasRequired(ds => ds.DiceRoller).WithRequiredDependent(dr => dr.Settings);
         }
 

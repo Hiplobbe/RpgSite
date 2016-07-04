@@ -1,0 +1,3 @@
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\RPGTestConsole.exe.config
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\obj\Debug\RPGTestConsole.csprojResolveAssemblyReference.cache
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\obj\Debug\RPGTestConsole.csproj.RPGTestConsole.exe.config
