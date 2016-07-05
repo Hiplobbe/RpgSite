@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Script.Serialization;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using RPGSite.Models;
+using RPGSite.Models.Dice;
+using RPGSite.Tools;
 
 namespace RPGSite.Controllers.Hubs
 {
@@ -29,7 +32,7 @@ namespace RPGSite.Controllers.Hubs
             }
             else
             {
-                Clients.All.broadcastMessage(user.UserName + ": " + message); //Basic all chatmessage.
+                Clients.All.broadcastMessage(new HubMessage(user.UserName,message,MessageType.ChatMessage).ToJson()); //Basic all chatmessage.
             }
         }
         /// <summary>
@@ -47,10 +50,13 @@ namespace RPGSite.Controllers.Hubs
             }
         }
 
-        private static void DieRoll(string message, User user)
+        private void DieRoll(string message, User user)//TODO: Test.
         {
-            Regex regex = new Regex(@"/(\d)(?:\s?diff(\d{1,}))?$/g");
-            if (regex.IsMatch(message))
+            List<DiceRoller.DieResult> results = new List<DiceRoller.DieResult>();
+            bool limited = false;
+
+            Regex regex = new Regex(@"/(\d)(?:\s?diff(\d{1,}))?\s?(limited)?$/g");
+            if (regex.IsMatch(message)) //Ex. /roll 1
             {
                 Match match = regex.Match(message);
 
@@ -59,31 +65,74 @@ namespace RPGSite.Controllers.Hubs
                 if (!String.IsNullOrEmpty(match.Groups[2].Value))
                 {
                     int diff = Convert.ToInt32(match.Groups[3].Value);
-                    user.DiceRollers[0].Roll(times,diff);
+                    results = user.DiceRollers[0].Roll(times,diff);
                 }
                 else
                 {
-                    user.DiceRollers[0].Roll(times);
+                    results = user.DiceRollers[0].Roll(times);
+                }
+
+                if (!String.IsNullOrEmpty(match.Groups[3].Value))
+                {
+                    limited = true;
                 }
             }
             else
             {
-                regex = new Regex(@"/(\d)d(\d{1,})\s?(?:diff(\d{1,})\s)?(limited)?/g");
+                regex = new Regex(@"/(\d)d(\d{1,})\s?(?:diff(\d{1,}))?\s?(limited)?/g");
                 Match match = regex.Match(message);
 
                 int times = Convert.ToInt32(match.Groups[1].Value);
                 int value = Convert.ToInt32(match.Groups[2].Value);
 
-                if (!String.IsNullOrEmpty(match.Groups[3].Value))
+                if (!String.IsNullOrEmpty(match.Groups[3].Value)) //Ex. /roll 1d20 diff8 limited
                 {
                     int diff = Convert.ToInt32(match.Groups[3].Value);
-                    user.DiceRollers[0].Roll(times, value, diff);
+                    results = user.DiceRollers[0].Roll(times, value, diff);
                 }
                 else
                 {
-                    user.DiceRollers[0].Roll(times, value);
+                    results = user.DiceRollers[0].Roll(times, value);
+                }
+
+                if(!String.IsNullOrEmpty(match.Groups[4].Value))
+                {
+                    limited = true;
                 }
             }
+
+            SendDieResult(results,user.UserName,limited);
+        }
+        /// <summary>
+        /// Sends the die roll results to the players.
+        /// </summary>
+        /// <param name="results">The result of the roll(s)</param>
+        /// <param name="username">The user who rolled</param>
+        /// <param name="limited">Visibility of the result(Limited means only gm and command writer can see the result)</param>
+        private void SendDieResult(List<DiceRoller.DieResult> results,string username, bool limited)
+        {
+            //TODO: Add limited view.(Owner and leader sees roll)
+            Clients.All.broadcastMessage(new HubMessage(username, results.ToJson(),MessageType.Roll).ToJson()); //Basic all chatmessage.
+        }
+
+        private class HubMessage
+        {
+            public string SenderUsername { get; set; }
+            public string Message { get; set; }
+            public MessageType Type { get; set; }
+
+            public HubMessage(string senderUsername, string message, MessageType type)
+            {
+                SenderUsername = senderUsername;
+                Message = message;
+                Type = type;
+            }
+        }
+        private enum MessageType
+        {
+            ChatMessage,
+            Roll,
+            CardDraw
         }
     }
 }
