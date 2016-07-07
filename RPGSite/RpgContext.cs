@@ -6,14 +6,18 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using RPGSite.Models.Card;
 using RPGSite.Models.Dice;
+using RPGSite.Models.Wiki;
 
 namespace RPGSite.Models
 {
     public class RpgContext : IdentityDbContext<User>
     {
+        public DbSet<WikiEntry> WikiEntries { get; set; }
+
         public RpgContext() : base("ConnectionString")
         {
             Database.SetInitializer<RpgContext>(new DbInitializer());
@@ -51,5 +55,12 @@ namespace RPGSite.Models
     {
         //TODO: Seed admin account?
         //TODO: Seed standards.(Dice,Card,Sheets)
+
+        protected override void Seed(RpgContext context)
+        {
+            context.WikiEntries.Add(new WikiEntry("Index")); //To act as the "starter page" for the wiki.
+
+            base.Seed(context);
+        }
     }
 }

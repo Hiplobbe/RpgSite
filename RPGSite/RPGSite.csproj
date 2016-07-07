@@ -231,8 +231,9 @@
     <Compile Include="Models\Character\Sheet.cs" />
     <Compile Include="Models\Dice\DiceRoller.cs" />
     <Compile Include="Models\Dice\DiceSettings.cs" />
-    <Compile Include="Models\RpgContext.cs" />
+    <Compile Include="RpgContext.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Wiki\WikiEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Tools\ToJsonExtension.cs" />
@@ -276,6 +277,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Hubs\" />
+    <Folder Include="Views\Wiki\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -286,6 +288,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\TS Files\Chat.ts" />
+    <TypeScriptCompile Include="Scripts\TS Files\Wiki.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\signalr\signalr.d.ts" />
   </ItemGroup>
