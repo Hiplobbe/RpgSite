@@ -220,6 +220,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Hubs\ChatHub.cs" />
+    <Compile Include="Controllers\WikiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -261,6 +262,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\TS Output\Chat.js" />
+    <Content Include="Scripts\TS Output\Wiki.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -273,11 +276,13 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Wiki\Index.cshtml" />
+    <Content Include="Scripts\TS Output\Chat.js.map" />
+    <Content Include="Scripts\TS Output\Wiki.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Hubs\" />
-    <Folder Include="Views\Wiki\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -308,7 +313,7 @@
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
     <TypeScriptOutFile />
-    <TypeScriptOutDir />
+    <TypeScriptOutDir>C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\Scripts\TS Output</TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
