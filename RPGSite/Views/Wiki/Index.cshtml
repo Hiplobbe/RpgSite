@@ -1,7 +1,11 @@
 ﻿@model RPGSite.Models.Wiki.WikiEntry
 
 
-@using (Html.BeginForm(Model.Title+"/Save","Wiki"))
+@using (Ajax.BeginForm(Model.Title+"/Save",new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnSuccess = "toggleButtons()"
+}))
 {
     @Html.AntiForgeryToken()
 
@@ -9,19 +13,21 @@
         @Html.LabelFor(model => model.Title)
         <br/>
         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-        @*@Html.HiddenFor(model => model.Title)*@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Text,  new {@class = "form-control", @id = "wikiTextArea", @readonly = true})
+                @Html.TextAreaFor(model => model.Text, new {@class = "form-control", @id = "wikiTextArea", @style = "display:none;"})
                 @Html.ValidationMessageFor(model => model.Text, "", new {@class = "text-danger"})
+            </div>
+            <div id="wikiTextDiv" class="col-md-10">
+                Newer Text
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input id="wikiEdit" type="button" onclick="toggleButtons()"  value="Edit"/>
-                <input id="wikiSubmit" type="submit" onclick="toggleButtons()" value="Save" class="btn btn-default" style="display: none"/>
+                <input id="wikiSubmit" type="submit" value="Save" class="btn btn-default" style="display: none;"/>
             </div>
         </div>
     </div>
@@ -29,5 +35,5 @@
 
 <div>
     @Html.ActionLink("Back to Start", "Index")
-    @Scripts.Render("~/Scripts/TS Output/Wiki.js")
+    @Scripts.Render("~/Scripts/TS Output/Wiki.js?version=2")
 </div>

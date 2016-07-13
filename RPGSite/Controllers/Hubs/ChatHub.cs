@@ -55,7 +55,7 @@ namespace RPGSite.Controllers.Hubs
             List<DiceRoller.DieResult> results = new List<DiceRoller.DieResult>();
             bool limited = false;
 
-            Regex regex = new Regex(@"/(\d)(?:\s?diff(\d{1,}))?\s?(limited)?$/g");
+            Regex regex = new Regex(@"/(\d)(?:\s?diff(\d{1,}))?\s?(limited)?$/g"); //TODO: Correct all regex in chat hub.
             if (regex.IsMatch(message)) //Ex. /roll 1
             {
                 Match match = regex.Match(message);

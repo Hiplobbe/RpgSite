@@ -42,7 +42,7 @@ namespace RPGSite.Controllers
 
         //Pressed the save button.
         [Route("Wiki/{title}/Save")]
-        public ActionResult Save(string title,FormCollection collection)
+        public PartialViewResult Save(string title,FormCollection collection)
         {
             using (RpgContext context = RpgContext.Create())
             {
@@ -51,7 +51,7 @@ namespace RPGSite.Controllers
 
                 if (entry == null)
                 {
-                    return RedirectToAction("Index");
+                    return PartialView("Index");
                 }
 
                 if (entry.Text != newText)
@@ -64,7 +64,7 @@ namespace RPGSite.Controllers
                 }
             }
 
-            return RedirectToAction("/"+title);
+            return null;
         }
 
         private void FixLinks(string NewText,string OldText)
