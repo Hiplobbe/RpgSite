@@ -19,7 +19,7 @@ namespace RPGSite.Controllers
             {
                 WikiEntry entry = context.WikiEntries.First(w => w.Title == "Index");
 
-                return View(entry);
+                return PartialView(entry);
             }
         }
 
@@ -33,10 +33,10 @@ namespace RPGSite.Controllers
 
                 if (entry != null)
                 {
-                    return View("Index",entry);
+                    return PartialView("Index",entry);
                 }
 
-                return Index(); //If none is found, returns to start.
+                return PartialView("Index"); //If none is found, returns to start.
             }
         }
 
@@ -82,11 +82,11 @@ namespace RPGSite.Controllers
                     {
                         if (!context.WikiEntries.Any(entry => entry.Title == newTitle.ToLower()))//If there isn't any title in db yet.
                         {
-                            AddTitle(context, newTitle.ToLower()); //Add the new title to db.
+                            AddTitle(context, newTitle); //Add the new title to db.
                         }
                         else
                         {
-                            AddLink(context, newTitle.ToLower());
+                            AddLink(context, newTitle);
                         }
                     }
                     else
@@ -97,14 +97,14 @@ namespace RPGSite.Controllers
 
                 foreach (string oldTitle in OldTitles)//Everyone of the old links that is not in the new text, gets -1 to their referance variable.
                 {
-                    RemoveLink(context, oldTitle.ToLower());
+                    RemoveLink(context, oldTitle);
                 }
             }
         }
 
         private void AddLink(RpgContext Context, string Title)
         {
-            WikiEntry entry = Context.WikiEntries.FirstOrDefault(e => e.Title == Title);
+            WikiEntry entry = Context.WikiEntries.FirstOrDefault(e => e.Title.ToLower() == Title.ToLower());
 
             if (entry != null)
             {
@@ -122,13 +122,13 @@ namespace RPGSite.Controllers
         /// <param name="Title">The title of the wiki entry</param>
         private void RemoveLink(RpgContext Context, string Title)
         {
-            WikiEntry entry = Context.WikiEntries.FirstOrDefault(e => e.Title == Title);
+            WikiEntry entry = Context.WikiEntries.FirstOrDefault(e => e.Title.ToLower() == Title.ToLower());
 
             if (entry != null)
             {
                 entry.Referanced--;
 
-                if (entry.Referanced <= 0)
+                if (entry.Referanced <= 0 && Title != "Index")
                 {
                     Context.WikiEntries.Remove(entry);
                 }

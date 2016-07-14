@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Chat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid bg-3 text-center">
+    @Scripts.Render("~/Scripts/SiteScripts/Chat.js")
+    <div class="row">
+        <div class="col-sm-6">
+            <p>Chat</p>
+
+            <div class="chatContainer">
+                <div class="chatHeader">
+                    <h3>Welcome</h3>
+                </div>
+
+                <div class="chatMessages"></div>
+
+                <div class="chatBottom">
+                    <form action="#" onSubmit=" return false " id="chatForm" class="form-inline">
+                        <input type="hidden" id="name" value="<?php echo $user; ?>"/>
+                        <div class="input-group">
+                            <input type="text" name="text" id="text" value="" size="100%" class="form-control" placeholder="Message"/>
+                            <span class="input-group-btn">
+                                <input type="submit" name="submit" id="submit" class="btn btn-default" value="Send" />
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- <img src="http://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"> -->
+
+        </div>
+
+        <div class="col-sm-6">
+            <p>Main</p>
+            <div id="chatTabs" class="mainHeader">
+                <div class="btn-group btn-group-justified">
+                    <a href="#wikiTab" class="btn btn-default" onclick="tabSelect('#wikiTab')">Wiki</a>
+                    <a href="#testTab" class="btn btn-default" onclick="tabSelect('#testTab')">Item</a>
+                </div>
+                <div class="tabcontent" id="wikiTab">
+                    <div id="wikiTabContent">
+                        @Html.Action("Index", "Wiki")
+                    </div>
+                </div>
+                <div class="tabcontent" id="testTab">
+                    <p>Changed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br>
+

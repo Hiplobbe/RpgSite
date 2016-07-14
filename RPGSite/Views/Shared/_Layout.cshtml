@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RPGSite</title>
     @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/Content/css")
@@ -21,6 +21,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Chat room","Index", "Chat")</li>
                 </ul>
             </div>
         </div>
