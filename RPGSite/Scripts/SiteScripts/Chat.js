@@ -2,7 +2,7 @@ $(function () {
     tabSelect('#wikiTab');
 });
 function tabSelect(tab) {
-    $(".tabcontent").hide();
+    $(".jsTabs").hide();
     $(tab).toggle();
 }
 function updatePartial(link, contentDiv) {
