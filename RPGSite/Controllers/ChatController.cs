@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace RPGSite.Controllers
 {
+    [Authorize]
     public class ChatController : Controller
     {
         // GET: Chat

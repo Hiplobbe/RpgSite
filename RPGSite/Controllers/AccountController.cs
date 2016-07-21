@@ -40,6 +40,19 @@ namespace RPGSite.Controllers
             private set { _userManager = value; }
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
         //
         // POST: /Account/Login
         [HttpPost]
@@ -78,7 +91,7 @@ namespace RPGSite.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
@@ -88,7 +101,7 @@ namespace RPGSite.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User() {UserName = model.Email};
+                var user = new User() {UserName = model.Username,Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

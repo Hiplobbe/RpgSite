@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,12 +18,14 @@ namespace RPGSite.Models
     //TODO: Optimise usage of the lists.
     public class User : IdentityUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         public List<CardDealer> CardDealers { get; set; }
         public List<DiceRoller> DiceRollers { get; set; }
+
+        public User()
+        {
+            CardDealers = new List<CardDealer>();
+            DiceRollers = new List<DiceRoller>();
+        }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {

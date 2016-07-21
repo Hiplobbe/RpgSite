@@ -22,9 +22,9 @@ namespace RPGSite.Controllers.Hubs
         /// First reciever for all messages.
         /// </summary>
         /// <param name="message">The message sent by a client.</param>
-        public void Send(string message)
+        public void Send(string sender,string message)
         {
-            User user = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(HttpContext.Current.User.Identity.GetUserId()); //TODO: Replace?
+            User user = null;//TODO: Get sender.
 
             if (message.StartsWith("/"))
             {
@@ -35,8 +35,9 @@ namespace RPGSite.Controllers.Hubs
                 Clients.All.broadcastMessage(new HubMessage(user.UserName,message,MessageType.ChatMessage).ToJson()); //Basic all chatmessage.
             }
         }
+
         /// <summary>
-        /// Interprets the command, 
+        /// Interprets the command.
         /// </summary>
         /// <param name="message">The message to be interpret.</param>
         /// <param name="user">The user that sent the message.</param>
