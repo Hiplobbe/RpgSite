@@ -69,7 +69,7 @@ namespace RPGSite.Controllers
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result =
                 await
-                    SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
+                    SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe,
                         shouldLockout: false);
             switch (result)
             {

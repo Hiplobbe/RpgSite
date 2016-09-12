@@ -7,6 +7,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using RPGSite.Models.Card;
 using RPGSite.Models.Dice;
@@ -31,6 +32,8 @@ namespace RPGSite.Models
             modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
             modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
 
+            modelBuilder.Entity<User>().HasKey<string>(r => r.Id);
+
             modelBuilder.Entity<CardDealer>()
                 .Property(c => c.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
@@ -49,14 +52,34 @@ namespace RPGSite.Models
 
     public class DbInitializer : DropCreateDatabaseIfModelChanges<RpgContext>
     {
-        //TODO: Seed admin account?
         //TODO: Seed standards.(Dice,Card,Sheets)
-
         protected override void Seed(RpgContext context)
         {
             context.WikiEntries.Add(new WikiEntry("Index")); //To act as the "starter page" for the wiki.
+            SeedRoles(context);
+            SeedAdmin(context);
 
             base.Seed(context);
+        }
+        /// <summary>
+        /// Creates an admin user, with password "admin123".
+        /// </summary>
+        private void SeedAdmin(RpgContext context)
+        {
+            ApplicationUserManager manager = new ApplicationUserManager(new UserStore<User>(context));
+            User user = new User { UserName = "Admin"};
+            
+            manager.Create(user, "admin123");
+            manager.AddToRole(user.Id, "GM");
+        }
+        /// <summary>
+        /// Creates two standard roles, GM and Player.
+        /// </summary>
+        private void SeedRoles(RpgContext context)
+        {
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            roleManager.Create(new IdentityRole("Player"));
+            roleManager.Create(new IdentityRole("GM"));
         }
     }
 }
