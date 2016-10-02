@@ -2,7 +2,10 @@ $(document).ready(function () {
 
     if ($.wikiBack == null) {
         $.current = 'Index';
-        $("#wikiBack").hide();
+        $(".backButtons").hide();
+    }
+    if ($.current == 'Index') {
+        $("#backToStart").hide();
     }
 
     wikiLinks(false);
@@ -34,6 +37,14 @@ function update(link, previous) {
     $.current = link.match(/\w+$/);
 
     $.get(link, function (data) {
+        $("#wikiTabContent").html(data);
+    });
+}
+function backToStart(previous) {
+    $.wikiBack = previous;
+    $.current = 'Index';
+
+    $.get('/Wiki/Index', function (data) {
         $("#wikiTabContent").html(data);
     });
 }

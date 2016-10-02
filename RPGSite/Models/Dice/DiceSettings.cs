@@ -12,6 +12,7 @@ namespace RPGSite.Models.Dice
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public string Name { get; set; }
         public int StandardValue { get; set; }
         public int StandardDifficulty { get; set; }
         public bool AgainRule { get; set; }

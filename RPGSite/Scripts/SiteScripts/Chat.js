@@ -2,11 +2,12 @@
 $(function () {
     tabSelect('#wikiTab');
 
-    $.connection.chatHub.recFunc = recMessage;
+    $.connection.chatHub.client.receiveMessage = recMessage;
 
     $.connection.hub.start().done(function () {
         $('#sendButton').click(function () {
-            sendMessage(userData.id,$('#chatText').val()); //TODO: Authorize chat page.
+            sendMessage(userData.id, $('#chatText').val());
+            $('#chatText').val('');
         });
     });
 });
@@ -25,6 +26,10 @@ function sendMessage(id,message) {
     $.connection.chatHub.server.send(id,message);
 }
 //Callback
-function recMessage(sender, message) {
-    //TODO: Finalise.
+function recMessage(message) {
+    var chatMessage = JSON.parse(message);
+
+    if (chatMessage.Type == 0) {
+        $(".chatMessages").append(chatMessage.Username + ":" + chatMessage.Message + "<br/>");
+    }
 }

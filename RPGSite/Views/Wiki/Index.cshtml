@@ -30,8 +30,8 @@
                 <input id="wikiEdit" type="button" onclick=" toggleButtons() " value="Edit"/>
                 <input id="wikiSubmit" type="submit" value="Save" class="btn btn-default" style="display: none;"/>
             </div>
-            <a id="wikiBack" href="#" onclick="back()">Back</a>
-            <a href="#" onclick="update('/Wiki','@Model.Title')">Back to start</a>
+            <a class="backButtons" href="#" onclick="back()">Back</a>
+            <a id="backToStart" class="backButtons" href="#" onclick="backToStart('@Model.Title')">Back to start</a>
         </div>
     </div>
 }

@@ -18,13 +18,15 @@ namespace RPGSite.Controllers.Hubs
     /// </summary>
     public class ChatHub : Hub
     {
+        private RpgContext context = new RpgContext();
+
         /// <summary>
         /// First reciever for all messages.
         /// </summary>
         /// <param name="message">The message sent by a client.</param>
-        public void Send(string sender,string message)
+        public void Send(string id,string message)
         {
-            User user = null;//TODO: Get sender.
+            User user = context.Users.Single(u => u.Id == id);//TODO: Get sender.
 
             if (message.StartsWith("/"))
             {
@@ -32,7 +34,7 @@ namespace RPGSite.Controllers.Hubs
             }
             else
             {
-                Clients.All.broadcastMessage(new HubMessage(user.UserName,message,MessageType.ChatMessage).ToJson()); //Basic all chatmessage.
+                Clients.All.receiveMessage(new HubMessage(user.UserName,message,MessageType.ChatMessage).ToJson()); //Basic all chatmessage.
             }
         }
 
@@ -46,6 +48,7 @@ namespace RPGSite.Controllers.Hubs
             //Ex. "/roll 1d10 limited" would roll a d10 once and only show the roll for the gm and player.
             if (message.StartsWith("/roll") || message.StartsWith("/Roll"))
             {
+                //TODO:Make dicerollers selectable
                 //TODO: Add character stat rolls.
                 DieRoll(message, user);
             }
@@ -113,18 +116,18 @@ namespace RPGSite.Controllers.Hubs
         private void SendDieResult(List<DiceRoller.DieResult> results,string username, bool limited)
         {
             //TODO: Add limited view.(Owner and leader sees roll)
-            Clients.All.broadcastMessage(new HubMessage(username, results.ToJson(),MessageType.Roll).ToJson()); //Basic all chatmessage.
+            Clients.All.receiveMessage(new HubMessage(username, results.ToJson(),MessageType.Roll).ToJson()); //Basic all chatmessage.
         }
 
         private class HubMessage
         {
-            public string SenderUsername { get; set; }
+            public string Username { get; set; }
             public string Message { get; set; }
             public MessageType Type { get; set; }
 
-            public HubMessage(string senderUsername, string message, MessageType type)
+            public HubMessage(string username, string message, MessageType type)
             {
-                SenderUsername = senderUsername;
+                Username = username;
                 Message = message;
                 Type = type;
             }
