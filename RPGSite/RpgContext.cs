@@ -32,7 +32,10 @@ namespace RPGSite.Models
             modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
             modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
 
-            modelBuilder.Entity<User>().HasKey<string>(r => r.Id);
+            modelBuilder.Entity<User>().HasKey<string>(u => u.Id);
+            modelBuilder.Entity<User>().HasMany(u => u.DiceSettings).WithRequired(ds => ds.User);
+            modelBuilder.Entity<User>().HasMany(u => u.DiceRollers).WithRequired(dr => dr.User);
+            modelBuilder.Entity<User>().HasMany(u => u.CardDealers).WithRequired(cd => cd.User);
 
             modelBuilder.Entity<CardDealer>()
                 .Property(c => c.Id)
@@ -41,7 +44,7 @@ namespace RPGSite.Models
                 .Property(c => c.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
-            modelBuilder.Entity<DiceSettings>().HasRequired(ds => ds.DiceRoller).WithRequiredDependent(dr => dr.Settings);
+            modelBuilder.Entity<DiceRoller>().HasRequired(dr => dr.Settings).WithOptional(ds => ds.DiceRoller);
         }
 
         public static RpgContext Create()

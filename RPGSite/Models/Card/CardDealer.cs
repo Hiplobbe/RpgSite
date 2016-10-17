@@ -18,6 +18,7 @@ namespace RPGSite.Models.Card
         public string Name { get; set; }
 
         public List<Card> Deck { get; set; }
+        public virtual User User { get; set; }
 
         [NotMapped]
         public List<Card> Discard { get; set; }

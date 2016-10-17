@@ -11,7 +11,7 @@ namespace RPGSite.Models.Dice
     public class EditViewDiceRoller
     {
         public string Name { get; set; }
-        [Display(Name = "Name")]
+        public int SelectedId { get; set; }
         public IEnumerable<SelectListItem> SettingsList { get; set; }
     }
 }

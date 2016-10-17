@@ -7,7 +7,7 @@
 
 <h2>Add new dice roller</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("SaveDiceRoller","Home")) 
 {
     @Html.AntiForgeryToken()
     
@@ -25,7 +25,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Dice Settings</label>
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.SettingsList, Model.SettingsList) <a href="@Url.Action("AddDiceSettings")">Add Settings</a>
+                @Html.DropDownListFor(model => model.SelectedId, Model.SettingsList) <a href="@Url.Action("AddDiceSettings")">Add Settings</a>
             </div>
         </div>
 

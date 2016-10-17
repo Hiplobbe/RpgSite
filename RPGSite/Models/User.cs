@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.Design;
 using System.Data.Entity;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -20,11 +21,13 @@ namespace RPGSite.Models
     {
         public List<CardDealer> CardDealers { get; set; }
         public List<DiceRoller> DiceRollers { get; set; }
+        public ICollection<DiceSettings> DiceSettings { get; set; }
 
         public User()
         {
             CardDealers = new List<CardDealer>();
             DiceRollers = new List<DiceRoller>();
+            DiceSettings = new List<DiceSettings>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
