@@ -12,7 +12,7 @@ namespace RPGSite.Models.Character
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        private int Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public int MaxValue { get; set; }
         public int Value { get; set; }

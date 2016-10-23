@@ -11,8 +11,12 @@ namespace RPGSite.Models.Character
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        private int Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
+        public string UserId { get; set; }
+        public int SheetId { get; set; }
+
         public Sheet Sheet { get; set; }
+        public virtual User PlayerUser { get; set; }
     }
 }

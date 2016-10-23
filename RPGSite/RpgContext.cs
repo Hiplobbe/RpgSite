@@ -36,6 +36,11 @@ namespace RPGSite.Models
             modelBuilder.Entity<User>().HasMany(u => u.DiceSettings).WithRequired(ds => ds.User);
             modelBuilder.Entity<User>().HasMany(u => u.DiceRollers).WithRequired(dr => dr.User);
             modelBuilder.Entity<User>().HasMany(u => u.CardDealers).WithRequired(cd => cd.User);
+            modelBuilder.Entity<User>().HasMany(u => u.Characters).WithRequired(c => c.PlayerUser);
+
+            modelBuilder.Entity<Character.Character>().HasRequired(c => c.Sheet);
+
+            modelBuilder.Entity<Character.Sheet>().HasMany(s => s.Attributes);
 
             modelBuilder.Entity<CardDealer>()
                 .Property(c => c.Id)
