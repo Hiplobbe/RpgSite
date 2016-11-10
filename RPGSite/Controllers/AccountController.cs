@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RPGSite.Models;
+using RPGSite.Models.Edit;
 
 namespace RPGSite.Controllers
 {
@@ -51,6 +53,55 @@ namespace RPGSite.Controllers
         public ActionResult Register()
         {
             return View();
+        }
+        public ActionResult AddUser()
+        {
+            return View("EditUser", new EditViewUser());
+        }
+        public ActionResult EditUser(string userId)
+        {
+            if (!String.IsNullOrEmpty(userId))
+            {
+                User user = UserManager.Users.First(u => u.Id == userId);
+
+                return View(new EditViewUser(user.Id, user.UserName));
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+        /// <summary>
+        /// Saves a new user or edits a users info.
+        /// </summary>
+        public async Task<ActionResult> SaveEditedUser(EditViewUser editedUser)
+        {
+            if (String.IsNullOrEmpty(editedUser.Id))
+            {
+                User user = new User() {UserName = editedUser.Username};
+
+                UserManager.Create(user, editedUser.Password);
+                UserManager.AddToRole(user.Id, "Player"); // Currently there will only be one GM.
+            }
+            else
+            {
+                UserStore<User> store = new UserStore<User>(RpgContext.Create());
+                User oldUser = UserManager.Users.First(u => u.Id == editedUser.Id);
+
+                if (editedUser.Password != "******")
+                {
+                    string HashedPassword = UserManager.PasswordHasher.HashPassword(editedUser.Password);
+                    
+                    await store.SetPasswordHashAsync(oldUser, HashedPassword);
+                }
+
+                if (editedUser.Username != oldUser.UserName)
+                {
+                    oldUser.UserName = editedUser.Username;
+                }
+
+                await UserManager.UpdateAsync(oldUser);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -101,7 +152,7 @@ namespace RPGSite.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User() {UserName = model.Username,Email = model.Email};
+                var user = new User() {UserName = model.Username};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

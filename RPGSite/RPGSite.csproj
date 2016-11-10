@@ -233,7 +233,8 @@
     <Compile Include="Models\Character\Sheet.cs" />
     <Compile Include="Models\Dice\DiceRoller.cs" />
     <Compile Include="Models\Dice\DiceSettings.cs" />
-    <Compile Include="Models\Dice\Edit\EditViewDiceRoller.cs" />
+    <Compile Include="Models\Edit\EditViewUser.cs" />
+    <Compile Include="Models\Edit\EditViewDiceRoller.cs" />
     <Compile Include="RpgContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Wiki\WikiEntry.cs" />
@@ -327,6 +328,7 @@
     <Content Include="Views\Home\Add\DiceRoller.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Add\DiceSettings.cshtml" />
+    <Content Include="Views\Account\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

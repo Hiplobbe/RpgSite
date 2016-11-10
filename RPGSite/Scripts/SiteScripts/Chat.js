@@ -28,8 +28,6 @@ function sendMessage(id,message) {
 //Callback
 function recMessage(message) {
     var chatMessage = JSON.parse(message);
-
-    if (chatMessage.Type == 0) {
-        $(".chatMessages").append(chatMessage.Username + ":" + chatMessage.Message + "<br/>");
-    }
+    
+    $(".chatMessages").append(chatMessage.Username + ":" + chatMessage.Message + "<br/>");
 }
