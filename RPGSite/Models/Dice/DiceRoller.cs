@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web;
-using System.Web.Script.Serialization;
 
 namespace RPGSite.Models.Dice
 {
     public class DiceRoller
     {
         [Key]
-        public int SettingsId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public int StandardValue { get; set; }
+        public int StandardDifficulty { get; set; }
+        public bool AgainRule { get; set; }
+        public int AgainValue { get; set; }
         public string UserId { get; set; }
 
-        public virtual DiceSettings Settings { get; set; }
         public virtual User User { get; set; }
 
         /// <summary>
@@ -26,22 +30,22 @@ namespace RPGSite.Models.Dice
         /// <param name="times">The amount of times to roll the die.</param>
         /// <param name="difficulty">The difficulty to roll against.</param>
         /// <returns>A list of all the roll results.</returns>
-        public List<DieResult> Roll(int times, int value,int difficulty)
+        public List<DieResult> Roll(int times, int value, int difficulty)
         {
             return DieRoll(value, times, difficulty);
         }
         public List<DieResult> Roll(int times, int value)
         {
-            return DieRoll(value, times, Settings.StandardDifficulty);
+            return DieRoll(value, times, StandardDifficulty);
         }
         public List<DieResult> Roll(int times)
         {
-            return DieRoll(Settings.StandardValue, times, Settings.StandardDifficulty);
+            return DieRoll(StandardValue, times, StandardDifficulty);
         }
 
         public List<DieResult> FakeRoll(int times)
         {
-            return DieRoll((Settings.StandardDifficulty-1), times, Settings.StandardDifficulty);
+            return DieRoll((StandardDifficulty - 1), times, StandardDifficulty);
         }
 
         private List<DieResult> DieRoll(int value, int times, int difficulty)
@@ -55,7 +59,7 @@ namespace RPGSite.Models.Dice
 
                 ReturnList.Add(roll >= difficulty ? new DieResult(roll, true) : new DieResult(roll, false));
 
-                if (Settings.AgainRule && roll == Settings.AgainValue)
+                if (AgainRule && roll == AgainValue)
                 {
                     times++;
                 }

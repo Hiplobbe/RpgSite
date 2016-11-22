@@ -21,14 +21,12 @@ namespace RPGSite.Models
     {
         public List<CardDealer> CardDealers { get; set; }
         public List<DiceRoller> DiceRollers { get; set; }
-        public List<DiceSettings> DiceSettings { get; set; }
         public List<Character.Character> Characters { get; set; }
 
         public User()
         {
             CardDealers = new List<CardDealer>();
             DiceRollers = new List<DiceRoller>();
-            DiceSettings = new List<DiceSettings>();
             Characters = new List<Character.Character>();
         }
 

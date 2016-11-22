@@ -1,27 +1,37 @@
-﻿@model RPGSite.Models.Dice.DiceSettings
+﻿@model RPGSite.Models.Dice.DiceRoller
 
 @{
-    ViewBag.Title = "DiceSettings";
+    ViewBag.Title = "DiceRoller";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>DiceSettings</h2>
+<h2>Dice roller</h2>
 
 <script>
     $(function () {
-        $('#againBox').click(function () {
-            $('#againField').toggle();
+        if ($("#AgainRule").is(':checked'))
+        {
+            $("#againField").show();
+        }
+        $('#AgainRule').click(function () {
+            if ($("#AgainRule").is(":checked")) {
+                $("#againField").show();
+            }
+            else {
+                $("#againField").hide();
+            }
         });
     });
 </script>
 
-@using (Html.BeginForm("SaveDiceSettings","Home")) 
+@using (Html.BeginForm("SaveDiceRoller","Home")) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>DiceSettings</h4>
-        <hr />
+        <hr/>
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.UserId)
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -34,7 +44,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StandardValue, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StandardValue, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
+                @Html.EditorFor(model => model.StandardValue, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.StandardValue, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,12 +52,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StandardDifficulty, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StandardDifficulty, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
+                @Html.EditorFor(model => model.StandardDifficulty, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.StandardDifficulty, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div id="againBox" class="form-group">
+        <div class="form-group">
             @Html.LabelFor(model => model.AgainRule, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
@@ -60,14 +70,21 @@
         <div id="againField" class="form-group" style="display:none">
             @Html.LabelFor(model => model.AgainValue, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AgainValue, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
+                @Html.EditorFor(model => model.AgainValue, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.AgainValue, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                @if (Model != null)
+                {
+                    <input type="submit" value="Edit" class="btn btn-default"/>
+                }
+                else
+                {
+                    <input type="submit" value="Create" class="btn btn-default" />
+                }
             </div>
         </div>
     </div>

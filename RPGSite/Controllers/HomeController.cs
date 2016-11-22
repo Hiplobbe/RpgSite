@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,72 +19,72 @@ namespace RPGSite.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View(new HomeViewModel(GetUser()));
         }
-        public ActionResult AddDiceSettings()
-        {
-            return View("Add/DiceSettings");
-        }
-
         public ActionResult AddDiceRoller()
         {
-            return View("Add/Diceroller",new EditViewDiceRoller { SettingsList = SettingsList()});
+            return View("AddEdit/DiceRoller");
         }
-
-        public ActionResult SaveDiceRoller(EditViewDiceRoller ViewModel)
+        public ActionResult EditDiceRoller(int Id)
         {
             var user = GetUser();
 
-            user.DiceRollers.Add(new DiceRoller
+            if (user.DiceRollers.Any(dr => dr.Id == Id))
             {
-                Name = ViewModel.Name,
-                Settings = user.DiceSettings.First(dc => dc.Id == ViewModel.SelectedId)
-            });
-
-            context.SaveChanges();
-            return View("Index");
-        }
-
-        public ActionResult SaveDiceSettings(DiceSettings SettingsModel)
-        {
-            var user = GetUser();
-
-            user.DiceSettings.Add(new DiceSettings
-            {
-                Name = SettingsModel.Name,
-                StandardValue = SettingsModel.StandardValue,
-                StandardDifficulty = SettingsModel.StandardDifficulty,
-                AgainRule = SettingsModel.AgainRule,
-                AgainValue = SettingsModel.AgainValue
-            });
-
-            context.SaveChanges();
-            return View("Add/Diceroller", new EditViewDiceRoller { SettingsList = SettingsList() });
-        }
-
-        private IEnumerable<SelectListItem> SettingsList()
-        {
-            var user = GetUser();
-
-            if (user.DiceSettings != null)
-            {
-                var settings = user.DiceSettings.Select(dr =>
-                    new SelectListItem
-                    {
-                        Value = dr.Id.ToString(),
-                        Text = dr.Name
-                    });
-
-                return new SelectList(settings, "Value", "Text");
+                return View("AddEdit/DiceRoller", user.DiceRollers.First(dr => dr.Id == Id));
             }
 
-            return new List<SelectListItem>();
+            return View("Index", new HomeViewModel(user));
+        }
+        public ActionResult DeleteDiceRoller(int Id)
+        {
+            var user = GetUser();
+            DiceRoller roller = user.DiceRollers.FirstOrDefault(dr => dr.Id == Id);
+
+            if (roller != null)
+            {
+                user.DiceRollers.Remove(roller);
+                context.DiceRollers.Remove(roller);
+
+                context.SaveChanges();
+            }
+
+            return View("Index", new HomeViewModel(user));
+        }
+
+        public ActionResult SaveDiceRoller(DiceRoller RollerModel)
+        {
+            var user = GetUser();
+
+            if (!user.DiceRollers.Any(dr => dr.Id == RollerModel.Id))
+            {
+                user.DiceRollers.Add(new DiceRoller
+                {
+                    Name = RollerModel.Name,
+                    StandardValue = RollerModel.StandardValue,
+                    StandardDifficulty = RollerModel.StandardDifficulty,
+                    AgainRule = RollerModel.AgainRule,
+                    AgainValue = RollerModel.AgainValue
+                });
+            }
+            else
+            {
+                RollerModel.User = user;
+                DiceRoller oldDR = context.DiceRollers.First(dr => dr.Id == RollerModel.Id);
+
+                context.Entry(oldDR).CurrentValues.SetValues(RollerModel);
+            }
+
+            context.SaveChanges();
+            return View("Index", new HomeViewModel(GetUser()));
         }
 
         private User GetUser()
         {
             string id = User.Identity.GetUserId();
-            User user = context.Users.Include(u => u.DiceSettings).First(u => u.Id == id);
+            User user = context.Users
+                .Include(u => u.DiceRollers)
+                .First(u => u.Id == id);
             return user;
         }
     }

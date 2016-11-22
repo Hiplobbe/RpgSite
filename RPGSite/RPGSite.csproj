@@ -232,9 +232,8 @@
     <Compile Include="Models\Character\Character.cs" />
     <Compile Include="Models\Character\Sheet.cs" />
     <Compile Include="Models\Dice\DiceRoller.cs" />
-    <Compile Include="Models\Dice\DiceSettings.cs" />
     <Compile Include="Models\Edit\EditViewUser.cs" />
-    <Compile Include="Models\Edit\EditViewDiceRoller.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="RpgContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Wiki\WikiEntry.cs" />
@@ -307,8 +306,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\SiteScripts\Chat.js" />
-    <Content Include="Scripts\SiteScripts\Wiki.js" />
+    <Content Include="Scripts\SiteScripts\Chat\Chat.js" />
+    <Content Include="Scripts\SiteScripts\Chat\Wiki.js" />
+    <Content Include="Scripts\SiteScripts\Home\Home.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -325,9 +325,8 @@
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Home\Add\DiceRoller.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Add\DiceSettings.cshtml" />
+    <Content Include="Views\Home\AddEdit\DiceRoller.cshtml" />
     <Content Include="Views\Account\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>

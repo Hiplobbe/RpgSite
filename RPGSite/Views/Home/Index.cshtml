@@ -1,4 +1,4 @@
-﻿
+﻿@model RPGSite.Models.HomeViewModel
 @{
     ViewBag.Title = "Index";
 }
@@ -11,19 +11,24 @@
 </div>
 
 <div class="container-fluid bg-3 text-center">
+    @Scripts.Render("~/bundles/home")
     <div class="row">
         <div class="col-sm-4">
             <p>Card Bot</p>
-            <img src="http://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+            <img src="http://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width: 100%" alt="Image">
         </div>
         <div class="col-sm-4">
             <p>Dice rollers</p>
-            @Html.ActionLink("Add dice roller","AddDiceroller",new {controller="Home"})
-            <img src="http://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+            @Html.ActionLink("Add dice roller", "AddDiceroller", new {controller = "Home"})
+            @Html.ListBoxFor(m => m.SelectedId, Model.DiceRollers, new {id="rollerlist",style = "width:100%",multiple = "false"})
+            <div id="rolleredit" style="display: none;">
+                <a id="editRoller">Edit</a>
+                <a id="deleteRoller">Delete</a>
+            </div>
         </div>
         <div class="col-sm-4">
-            <p>Random Generator</p>
-            <img src="http://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+            <p>Random Generators</p>
+            <img src="http://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width: 100%" alt="Image">
         </div>
     </div>
 </div><br>
