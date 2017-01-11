@@ -22,12 +22,14 @@ footer {
 .chatContainer > .chatMessages {
 	height: 600px;
 	border-bottom: 1px solid black;
-	overflow-y: scroll;	
+	overflow-y: scroll;
+    text-align: left;
+    margin: 10px;
 }
 
 .chatContainer > .chatBottom {
-	padding: 4px;
-	height: 20px;	
+	padding-bottom: 10px;
+	/*height: 20px;*/	
 }
 
 .chatContainer > .chatBottom #submit {
@@ -46,8 +48,22 @@ footer {
 .mainHeader > .btn-group {
 	
 }
-
+.selectedtab {
+    background-color: #e6e6e6;
+}
 .tabcontent {
     display: none;
     padding: 6px 12px;
 }
+
+/*Messages*/
+.whisper {
+    color: #fc28fc;
+}
+.roll {
+    color: #25e6fc;
+}
+.error {
+    color: #ff0a0a;
+}
+

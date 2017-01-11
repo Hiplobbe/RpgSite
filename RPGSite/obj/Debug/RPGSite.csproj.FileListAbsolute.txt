@@ -86,3 +86,17 @@ C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\Microsoft.AspNet
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\Microsoft.AspNet.SignalR.Core.xml
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\csc.exe.config
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\csc.rsp
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\csi.exe
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\csi.rsp
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\System.AppContext.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\vbc.exe.config
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGSite\bin\roslyn\vbc.rsp

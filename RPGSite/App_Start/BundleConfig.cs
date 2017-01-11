@@ -17,7 +17,7 @@ namespace RPGSite
                     "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/signalr").Include(
-                "~/Scripts/jquery.signalR-2.2.0.min.js"));
+                "~/Scripts/jquery.signalR-2.2.1.min.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

@@ -46,8 +46,8 @@
             <p>Main</p>
             <div id="chatTabs" class="mainHeader">
                 <div class="btn-group btn-group-justified">
-                    <a href="#wikiTab" class="btn btn-default" onclick=" tabSelect('#wikiTab') ">Wiki</a>
-                    <a href="#testTab" class="btn btn-default" onclick=" tabSelect('#testTab') ">Item</a>
+                    <a id="firstTab" href="#wikiTab" class="btn btn-default jsTabSelect selectedtab" onclick=" tabSelect(this,'#wikiTab') ">Wiki</a>
+                    <a href="#testTab" class="btn btn-default jsTabSelect" onclick=" tabSelect(this,'#testTab') ">Item</a>
                 </div>
                 <div class="tabcontent jsTabs" id="wikiTab">
                     <div id="wikiTabContent">
