@@ -232,6 +232,7 @@
     <Compile Include="Models\Character\Attribute.cs" />
     <Compile Include="Models\Character\Character.cs" />
     <Compile Include="Models\Character\Sheet.cs" />
+    <Compile Include="Models\ChatViewModel.cs" />
     <Compile Include="Models\Dice\DiceRoller.cs" />
     <Compile Include="Models\Edit\EditViewUser.cs" />
     <Compile Include="Models\HomeViewModel.cs" />

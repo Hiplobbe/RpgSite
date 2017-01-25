@@ -23,7 +23,7 @@ namespace RPGSite.Controllers.Hubs
     [Authorize]
     public class ChatHub : Hub
     {
-        //TODO: Add message coloring
+        //TODO: Add error messages
         //TODO: Add functionality to view chosen character name.(Instead of the users name)
 
         private static List<ChatUser> _LoggedInUsers = new List<ChatUser>();
@@ -66,11 +66,39 @@ namespace RPGSite.Controllers.Hubs
             {
                 InterpretCommand(message, ChatUser); //If message contains a command.
             }
+            else if (message.StartsWith("!"))
+            {
+                SelectSettings(message, ChatUser);
+            }
             else
             {
                 Clients.All.receiveMessage(new HubMessage(ChatUser.DisplayName,message,MessageType.StandardMessage).ToJson()); //Basic all chat message.
             }
         }
+        /// <summary>
+        /// Selects settings for the user.
+        /// </summary>
+        /// <param name="message">The message sent.</param>
+        /// <param name="ChatUser">The user asking for the change.</param>
+        private static void SelectSettings(string message, ChatUser ChatUser)
+        {
+            Regex regex = new Regex(@"!(\w*) (\d*)");
+
+            Match match = regex.Match(message);
+
+            int chosenid = Convert.ToInt32(match.Groups[2].Value);
+
+            switch (match.Groups[1].Value)
+            {
+                case "roller":
+                    ChatUser.SelectRoller(chosenid); //Selects wanted dice roller.
+                    break;
+                case "character":
+                    ChatUser.SelectCharacter(chosenid, false);//Selects wanted character, and whether or not is should be the display name.  //TODO:Handle display name.
+                    break;
+            }
+        }
+
         /// <summary>
         /// Interprets the command.
         /// </summary>
@@ -81,7 +109,6 @@ namespace RPGSite.Controllers.Hubs
             //Ex. "/roll 1d10 limited" would roll a d10 once and only show the roll for the gm and player.
             if (message.ToLower().StartsWith("/roll"))
             {
-                //TODO:Make dicerollers selectable
                 //TODO: Add character stat rolls.
                 DiceRoller diceRoller = user.GetSelectedRoller();
                 if (diceRoller != null)
@@ -151,15 +178,17 @@ namespace RPGSite.Controllers.Hubs
 
             Clients.Client(chatUser.ConnectionId).receiveMessage(new HubMessage("System", "Your name has now been changed",MessageType.System));
         }
+
+        #region Rolls
         private void DieRoll(string message, ChatUser chatUser,DiceRoller diceRoller)//TODO: Test.
         {
             List<DiceRoller.DieResult> results = new List<DiceRoller.DieResult>();
             bool limited = false;
 
-            Regex regex = new Regex(@"(\d)(?:\s?diff(\d{1,}))?\s?(limited)?$"); //TODO: Correct all regex in chat hub.
+            Regex regex = new Regex(@"(\s\d*)(?:\s?(\d*))?\s?(limited)?[\s\S]*?$"); //TODO: Correct all regex in chat hub.
             if (message.ToLower() == "/roll")
             {
-                diceRoller.Roll(1);
+                results = diceRoller.Roll(1);
             }
             else if(regex.IsMatch(message)) //Ex. /roll 1, Rolls the standard values chosen for the die.
             {
@@ -169,7 +198,7 @@ namespace RPGSite.Controllers.Hubs
 
                 if (!String.IsNullOrEmpty(match.Groups[2].Value))
                 {
-                    int diff = Convert.ToInt32(match.Groups[3].Value);
+                    int diff = Convert.ToInt32(match.Groups[2].Value);
                     results = diceRoller.Roll(times,diff);
                 }
                 else
@@ -184,7 +213,7 @@ namespace RPGSite.Controllers.Hubs
             }
             else //Manual roll
             {
-                regex = new Regex(@"(\d)d(\d{1,})\s?(?:diff(\d{1,}))?\s?(limited)?");
+                regex = new Regex(@"(\s\d*)d(\d*)\s?(?:(\d*))?\s(limited)?[\s\S]*?$");
                 Match match = regex.Match(message);
 
                 int times = Convert.ToInt32(match.Groups[1].Value);
@@ -206,6 +235,7 @@ namespace RPGSite.Controllers.Hubs
                 }
             }
 
+            //TODO:Handle success and fail of the whole roll?
             SendDieResult(results,chatUser.DisplayName,limited);
         }
         /// <summary>
@@ -219,6 +249,8 @@ namespace RPGSite.Controllers.Hubs
             //TODO: Add limited view.(Owner and leader sees roll)
             Clients.All.receiveMessage(new HubMessage(username, results.ToJson(),MessageType.Roll).ToJson()); //Basic all chatmessage.
         }
+        #endregion
+
         private User GetUser(string id)
         {
             return _Context.Users
@@ -234,7 +266,7 @@ namespace RPGSite.Controllers.Hubs
             public string DisplayName { get; set; }//The name to be displayed in chat.
             public string ConnectionId { get; set; }
             public int ChosenCharacterId { get; set; }//The chosen character for the player.
-            public int ChosenDiceRoller { get; set; }//The chosen dice roller.
+            public int ChosenDiceRollerId { get; set; }//The chosen dice roller.
             public User User { get; set; }
 
             public ChatUser(User user, string conId)
@@ -248,9 +280,9 @@ namespace RPGSite.Controllers.Hubs
             /// </summary>
             /// <param name="charactername">The chosen characters name.</param>
             /// <param name="setasdisplay">Wether or not to change the display name for the user in chat.</param>
-            public string SelectCharacter(string characterName,bool setasDisplay)
+            public string SelectCharacter(int characterId,bool setasDisplay)
             {
-                Character character = User.Characters.First(c => c.Name.ToLower() == characterName.ToLower());
+                Character character = User.Characters.First(c => c.Id == characterId);
 
                 if (character != null)
                 {
@@ -258,15 +290,15 @@ namespace RPGSite.Controllers.Hubs
 
                     if (setasDisplay)
                     {
-                        DisplayName = characterName;
+                        DisplayName = character.Name;
 
-                        return "You changed name to " + characterName;
+                        return "You changed name to " + DisplayName;
                     }
 
-                    return "Your character is now set as " + characterName;
+                    return "Your character is now set as " + character.Name;
                 }
 
-                return "No character found with that name";
+                return "No character found";
             }
             /// <summary>
             /// Selects a dice roller for rolls
@@ -276,7 +308,7 @@ namespace RPGSite.Controllers.Hubs
             {
                 if (User.DiceRollers.Exists(dr => dr.Id == rollerId))
                 {
-                    ChosenDiceRoller = rollerId;
+                    ChosenDiceRollerId = rollerId;
                 }
             }
             /// <summary>
@@ -284,12 +316,12 @@ namespace RPGSite.Controllers.Hubs
             /// </summary>
             public DiceRoller GetSelectedRoller()
             {
-                if (ChosenDiceRoller != 0)
+                if (ChosenDiceRollerId != 0)
                 {
-                    return User.DiceRollers.First(dr => dr.Id == ChosenCharacterId);
+                    return User.DiceRollers.First(dr => dr.Id == ChosenDiceRollerId);
                 }
 
-                return null;
+                return User.DiceRollers[0];
             }
             /// <summary>
             /// Gets the selected character for the player.

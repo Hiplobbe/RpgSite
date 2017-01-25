@@ -21,6 +21,8 @@ namespace RPGSite.Controllers
         {
             return View(new HomeViewModel(GetUser()));
         }
+
+        #region Dice roller
         public ActionResult AddDiceRoller()
         {
             return View("AddEdit/DiceRoller");
@@ -51,7 +53,6 @@ namespace RPGSite.Controllers
 
             return View("Index", new HomeViewModel(user));
         }
-
         public ActionResult SaveDiceRoller(DiceRoller RollerModel)
         {
             var user = GetUser();
@@ -78,6 +79,7 @@ namespace RPGSite.Controllers
             context.SaveChanges();
             return View("Index", new HomeViewModel(GetUser()));
         }
+        #endregion
 
         private User GetUser()
         {

@@ -16,7 +16,6 @@ C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\RPG
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\RPGTestConsole.pdb
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\EntityFramework.dll
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
-C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\Microsoft.AspNet.SignalR.Core.dll
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\RPGSite.dll
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\Microsoft.Owin.dll
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\System.Web.Optimization.dll
@@ -57,3 +56,17 @@ C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\Ant
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\Microsoft.Owin.Security.OAuth.xml
 C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\Antlr3.Runtime.pdb
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\csc.exe.config
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\csc.rsp
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\csi.exe
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\csi.rsp
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\System.AppContext.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\System.IO.FileSystem.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\vbc.exe.config
+C:\Users\Hiplobbe\Google Drive\Egna projekt\RPGSite\RPGTestConsole\bin\Debug\roslyn\vbc.rsp

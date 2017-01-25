@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@model RPGSite.Models.ChatViewModel
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Chat";
@@ -47,15 +48,21 @@
             <div id="chatTabs" class="mainHeader">
                 <div class="btn-group btn-group-justified">
                     <a id="firstTab" href="#wikiTab" class="btn btn-default jsTabSelect selectedtab" onclick=" tabSelect(this,'#wikiTab') ">Wiki</a>
-                    <a href="#testTab" class="btn btn-default jsTabSelect" onclick=" tabSelect(this,'#testTab') ">Item</a>
+                    <a href="#settingsTab" class="btn btn-default jsTabSelect" onclick=" tabSelect(this,'#settingsTab') ">Settings</a>
                 </div>
                 <div class="tabcontent jsTabs" id="wikiTab">
                     <div id="wikiTabContent">
                         @Html.Action("Index", "Wiki")
                     </div>
                 </div>
-                <div class="tabcontent jsTabs" id="testTab">
-                    <p>Changed</p>
+                <div class="tabcontent jsTabs" id="settingsTab">
+                    <span>Dice Rollers</span>
+                    <br/>
+                    @Html.ListBoxFor(u => u.SelectedRollerId, Model.DiceRollers, new {id = "rollerlist", style = "width:100%", multiple = "false"})
+                    <br/>
+                    <span>Characters</span>
+                    <br/>
+                    @Html.ListBoxFor(u => u.SelectedCharacterId, Model.Characters, new {id = "charlist", style = "width:100%", multiple = "false"})
                 </div>
             </div>
         </div>

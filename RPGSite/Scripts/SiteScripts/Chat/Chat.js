@@ -6,10 +6,26 @@ $(function () {
 
     $.connection.hub.start().done(function () {
         $('#sendButton').click(function () {
-            sendMessage(userData.id, $('#chatText').val());
+            sendMessage($('#chatText').val());
             $('#chatText').val('');
         });
     });
+
+    //#region Events
+    $("#rollerlist").on('change', function() {
+        sendMessage("!roller "+this.value);
+    });
+    $("#charlist").on('change', function () {
+        //TODO:Handle displayname radio button
+    });
+    $("#chatText").keypress(function (event) {
+        var keycode = event.keyCode || event.which;
+        if (keycode == '13') {
+            sendMessage($('#chatText').val());
+            $('#chatText').val('');
+        }
+    });
+    //#endregion
 });
 //Tab functionality
 function tabSelect(sender,tab) {
@@ -24,26 +40,49 @@ function updatePartial(link, contentDiv) {
 }
 
 //Message sender
-function sendMessage(id,message) {
-    $.connection.chatHub.server.send(id,message);
+function sendMessage(message) {
+    $.connection.chatHub.server.send(userData.id,message);
 }
 //Callback
 function recMessage(message) {
-    //TODO: Add message coloring
     //TODO: Handle private messages
     var chatMessage = JSON.parse(message);
 
-    var mClass = getMessageClass(chatMessage.MessageType);
+    var mClass = getMessageClass(chatMessage.Type);
     
-    $(".chatMessages").append("<span class='"+mClass+"'>"+chatMessage.Username + ":" + chatMessage.Message + "</span><br/>");
+    switch (chatMessage.Type)
+    {
+        case 2:
+            //TODO:Handle success and fail with coloring of message.
+            chatMessage.Message = refactorRoll(JSON.parse(chatMessage.Message));
+    }
+
+    $(".chatMessages").append("<span class='"+mClass+"'>"+chatMessage.Username + ": " + chatMessage.Message + "</span><br/>");
+}
+function refactorRoll(Rolls) {
+    Rolls.sort(rollSort);
+    var message = "";
+
+    for (i = 0; i < Rolls.length; i++) {
+        message += Rolls[i].Value + " ";
+    }
+
+    return message;
+}
+function rollSort(x, y) {
+    var xValue = x.Value;
+    var yValue = y.Value;
+    return ((xValue > yValue) ? -1 : ((xValue < yValue) ? 1 : 0));
 }
 function getMessageClass(type) {
     switch (type) {
-        case "StandardMessage":
+        case 0: //Standard
             return "";
-        case "Whisper":
+        case 1:
             return "whisper";
-        case "Roll":
+        case 2:
             return "roll";
     }
 }
+
+
