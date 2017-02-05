@@ -9,12 +9,16 @@ namespace RPGSite.Models
 {
     public class HomeViewModel
     {
-        public string SelectedId { get; set; }
+        public string SelectedDiceId { get; set; }
         public SelectList DiceRollers { get; set; }
+
+        public string SelectedCharId { get; set; }
+        public SelectList Characters { get; set; }
 
         public HomeViewModel(User user)
         {
             DiceRollers = new SelectList(user.DiceRollers,"Id","Name");
+            Characters = new SelectList(user.Characters, "Id", "Name");
         }
     }
 }

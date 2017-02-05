@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RPGSite.Models;
+using RPGSite.Models.Character;
 using RPGSite.Models.Dice;
 
 
@@ -19,7 +20,14 @@ namespace RPGSite.Controllers
 
         public ActionResult Index()
         {
-            return View(new HomeViewModel(GetUser()));
+            User u = GetUser();
+
+            if (u != null)
+            {
+                return View(new HomeViewModel(u));
+            }
+            
+            return RedirectToAction("Login","Account");
         }
 
         #region Dice roller
@@ -83,11 +91,19 @@ namespace RPGSite.Controllers
 
         private User GetUser()
         {
-            string id = User.Identity.GetUserId();
-            User user = context.Users
-                .Include(u => u.DiceRollers)
-                .First(u => u.Id == id);
-            return user;
+            try
+            {
+                string id = User.Identity.GetUserId();
+                User user = context.Users
+                    .Include(u => u.DiceRollers)
+                    .Include(u => u.Characters)
+                    .First(u => u.Id == id);
+                return user;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

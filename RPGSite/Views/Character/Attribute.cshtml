@@ -1,0 +1,54 @@
+﻿@model RPGSite.Models.ViewModels.AttributeViewModel
+
+<script src="~/Scripts/SiteScripts/Character/Attribute.js"></script>
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Attribute</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Attribute.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Attribute.Name, new { htmlAttributes = new { @id = "Name", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Attribute.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Attribute.MaxValue, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Attribute.MaxValue, new { htmlAttributes = new { @id = "MaxValue", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Attribute.MaxValue, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Attribute.Value, htmlAttributes: new { @class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Attribute.Value, new {htmlAttributes = new { @id = "Value", @class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Attribute.Value, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Attribute.Type, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SelectedGroupId, Model.AttrributeGroupsList, htmlAttributes: new {@id = "ddGroupId", @class = "form-control"})
+                <a id="newGroupButton" href="#">Create new group?</a>
+            </div>
+        </div>
+
+        <div id="newGroup" class="form-group" style="display:none">
+            <label class = "control-label col-md-2">New group</label>
+            <div class="col-md-10">
+                <input id="newGroupName" type="text"/>
+                <input id="createNewGroup" type="button" value="Save group"/>
+                <a id="#newGroupCancel" onclick="newGroupClose()" href="#">Close</a>
+                <p id="newGroupError" class="text-danger" style="display: none">Group already exists!</p>
+            </div>
+        </div>
+    </div>
+}

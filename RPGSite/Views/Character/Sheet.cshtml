@@ -1,0 +1,93 @@
+﻿@using System.Diagnostics.Eventing.Reader
+@model RPGSite.Models.SheetViewModel
+
+@{
+    ViewBag.Title = "Sheet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sheet</h2>
+<script src="~/Scripts/SiteScripts/Character/Sheet.js"></script>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Sheet</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sheet.Name, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Sheet.Name, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Sheet.Name, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sheet.Attributes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (Model.Sheet.Id != 0)
+                {
+                    <table>
+                        <tr>
+                            <td style="padding-right: 20px">
+                                <p>Selected attributes</p>
+                            </td>
+                            <td>
+                                <p>Select wanted attributes</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.ListBoxFor(m => m.SelectedAttriId, Model.SelectedAttributeList, htmlAttributes: new {@class = "form-control", @style = "width:100px"})
+                                @*TODO: Edit values for existing attributes with a new view for better overhead*@
+                            </td>
+
+                            <td>
+                                @Html.ListBoxFor(m => Model.AttributeList, Model.AttributeList, htmlAttributes: new {@class = "form-control", @style = "width:100px"})
+                            </td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <table>
+                        <tr>
+                            <td>
+                                <p>Select wanted attributes</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.ListBoxFor(m => Model.AttributeList, Model.AttributeList, htmlAttributes: new { @id = "standardAttributeList", @class = "form-control", @style = "height:400px;width:400px"})
+                                @Html.ActionLink("Add attribute","AddAttribute", null, htmlAttributes: new { @id = "addAttribute"})
+                            </td>
+                        </tr>
+                    </table>
+                }
+                @*TODO: Make it able to edit the chosen attributes value in this list, when sheet is not standard.*@
+                @*TODO: When making a new sheet, show list if already existing attributes?*@
+                @*TODO: Pop up when adding new attributes.*@
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sheet.IsStandard, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.Sheet.IsStandard, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

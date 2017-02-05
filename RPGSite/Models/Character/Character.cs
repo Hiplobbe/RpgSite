@@ -16,7 +16,7 @@ namespace RPGSite.Models.Character
         public string UserId { get; set; }
         public int SheetId { get; set; }
 
-        public Sheet Sheet { get; set; }
+        public virtual Sheet Sheet { get; set; }
         public virtual User PlayerUser { get; set; }
     }
 }
