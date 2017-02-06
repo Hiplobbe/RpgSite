@@ -7,7 +7,7 @@
 
 <h2>CharacterEdit</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("SaveCharacter","Character"))
 {
     @Html.AntiForgeryToken()
     
@@ -28,9 +28,16 @@
             <label class="control-label col-md-2">Sheet</label>
             <div class="col-md-10">
                 @*TODO: Only show standard sheets when making a new character*@
-                @*TODO: Delete previous sheet when making a new one?*@
                 @Html.DropDownListFor(m => m.SelectedSheetId, Model.SheetList, htmlAttributes: new {@class = "form-control"})
-                @Html.ActionLink("Add Sheet","AddSheet")
+
+                @if (Model.Character == null)
+                {
+                    @Html.ActionLink("Add Sheet", "AddSheetForCharacter", new {@charId = 0})
+                }
+                else
+                {
+                    @Html.ActionLink("Add Sheet", "AddSheetForCharacter", new { @charId = Model.Character.Id })
+                }
             </div>
         </div>
 

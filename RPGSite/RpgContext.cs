@@ -41,9 +41,9 @@ namespace RPGSite.Models
             modelBuilder.Entity<User>().HasKey<string>(u => u.Id);
             modelBuilder.Entity<User>().HasMany(u => u.DiceRollers).WithRequired(dr => dr.User);
             modelBuilder.Entity<User>().HasMany(u => u.CardDealers).WithRequired(cd => cd.User);
-            modelBuilder.Entity<User>().HasMany(u => u.Characters).WithRequired(c => c.PlayerUser);
+            modelBuilder.Entity<User>().HasMany(u => u.Characters).WithRequired(c => c.User);
 
-            modelBuilder.Entity<Character.Character>().HasRequired(c => c.PlayerUser);
+            modelBuilder.Entity<Character.Character>().HasRequired(c => c.User);
             modelBuilder.Entity<Character.Character>().HasRequired(c => c.Sheet);
 
             modelBuilder.Entity<Sheet>().HasMany(s => s.Attributes).WithMany(a => a.Sheets);
@@ -64,7 +64,7 @@ namespace RPGSite.Models
         }
     }
 
-    public class DbInitializer : DropCreateDatabaseAlways<RpgContext>
+    public class DbInitializer : DropCreateDatabaseIfModelChanges<RpgContext>
     {
         //TODO: Seed standards.(Dice,Card,Sheets)
         protected override void Seed(RpgContext context)

@@ -85,7 +85,7 @@ namespace RPGSite.Controllers
             }
 
             context.SaveChanges();
-            return View("Index", new HomeViewModel(GetUser()));
+            return View("Index", new HomeViewModel(user));
         }
         #endregion
 

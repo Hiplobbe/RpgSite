@@ -11,7 +11,7 @@
     $("#charList").change(function () {
         $("#charEdit").show();
 
-        var selectedid = $("#rollerlist").val();
+        var selectedid = $("#charList").val();
 
         $("#editChar").attr("href", "/Character/EditCharacter/?id=" + selectedid);
         $("#deleteChar").attr("href", "/Character/DeleteCharacter/?id=" + selectedid);
